@@ -17,24 +17,15 @@ client = OpenAI(
     api_key=API_KEY,
 )
 
-def keypoints_generate_text(system_prompt, user_prompt):
+def keypoints_generate_text(user_prompt):
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
-            {"role":"system", "content":system_prompt},
             {"role": "user", "content": user_prompt}
             ]
     )
     return response.choices[0].message.content.strip()
 
-system_prompt = '''
-당신은 대한민국 대학수학능력시험의 국어 영역 독서 분야 지문을 생성하는 시험출제 전문가이다. 
-학문적 주제를 기반으로 공정하고 객관적인 사실을 다루는 지문을 생성해야 한다. 
-하나의 주제를 중심으로 지문 전체의 흐름을 유지하면서도, 동일한 내용이나 유사한 논지를 불필요하게 반복하지 말고 각 문장을 논리적으로 전개해야 한다.
-단순한 정보 나열보다 개념 간의 관계를 유기적으로 연결하여 논리적으로 서술해야 한다. 
-
-시험을 치르는 수험생이 지문을 읽고 논리적 추론을 수행할 수 있게 작성해야 한다. 
-모든 문장은 한국어로 생성하며 문법적으로 완벽해야 한다.'''
 
 user_prompt = f"""
 다음은 한국교육과정평가원 스타일로 생성된 수능 독서 지문입니다.
@@ -42,10 +33,12 @@ user_prompt = f"""
 [생성된 지문]
 {custom_passage}
 
-이 지문에서 학생이 반드시 이해해야 할 핵심 논점을 요약하세요.
-각 논점은 1~2문장으로 정리하고, 출제 의도를 반영해야 합니다.
-출력은 불필요한 문자 없이 한글 문장 현태로만 출력하세요.
+논점이란 해당 글에서 다루는 핵심 주제나 쟁점을 의미한다. 
+이는 출제자가 독자에게 전달하고자 하는 주요 메시지나 주장으로, 글의 방향성과 목적을 결정짓는 요소입니다.
+이 지문에서 학생이 반드시 이해해야 할 핵심 논점을 요약하라.
+각 논점은 1~2문장으로 정리하고, 출제 의도를 반영해야 한다.
+출력은 불필요한 문자 없이 한글 문장 형태로만 출력해라.
 
 """
-key_points = keypoints_generate_text(system_prompt,user_prompt)
+key_points = keypoints_generate_text(user_prompt)
 print(key_points) 

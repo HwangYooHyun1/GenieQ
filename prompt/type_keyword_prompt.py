@@ -18,11 +18,10 @@ client = OpenAI(
     api_key=API_KEY,
 )
 
-def keypoints_generate_text(system_prompt, user_prompt):
+def keypoints_generate_text(user_prompt):
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
-            {"role":"system", "content":system_prompt},
             {"role": "user", "content": user_prompt}
             ]
     )
@@ -52,15 +51,6 @@ def keypoints_generate_text(system_prompt, user_prompt):
         return response_text, ["오류 발생"], "오류 발생", "JSON 파싱 오류 - 원본 응답 확인 필요"
 
 
-system_prompt = '''
-당신은 대한민국 대학수학능력시험의 국어 영역 독서 분야 지문을 생성하는 시험출제 전문가이다. 
-학문적 주제를 기반으로 공정하고 객관적인 사실을 다루는 지문을 생성해야 한다. 
-하나의 주제를 중심으로 지문 전체의 흐름을 유지하면서도, 동일한 내용이나 유사한 논지를 불필요하게 반복하지 말고 각 문장을 논리적으로 전개해야 한다.
-단순한 정보 나열보다 개념 간의 관계를 유기적으로 연결하여 논리적으로 서술해야 한다. 
-
-시험을 치르는 수험생이 지문을 읽고 논리적 추론을 수행할 수 있게 작성해야 한다. 
-모든 문장은 한국어로 생성하며 문법적으로 완벽해야 한다.'''
-
 user_prompt = f"""
 아래의 지문을 5가지 주제 (인문, 예술, 사회, 기술, 과학 중 선택) 중 하나로 분류하세요.
 그리고 15자 이내로 요약한 핵심 키워드를 1~3개 뽑아주세요. 쉼표(,)로 구분해주세요.
@@ -83,6 +73,6 @@ user_prompt = f"""
 }}
 ```
 """
-type_passage, keyword = keypoints_generate_text(system_prompt,user_prompt)
+type_passage, keyword = keypoints_generate_text(user_prompt)
 print(type_passage)
 print(keyword)
