@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 #지문 받아오기
-custom_passage = ""
+custom_passage = ''''''
 
 # .env 파일 로드
 load_dotenv()
