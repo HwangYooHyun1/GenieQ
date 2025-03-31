@@ -95,7 +95,7 @@ user_prompt = f'''
 '''
 
 # 지문 생성 및 검증
-max_attempts = 3  # 최대 3회 재시도
+max_attempts = 2  # 최대 2회 재시도
 attempt = 0
 custom_passage = ""
 
@@ -103,14 +103,14 @@ while attempt < max_attempts:
     custom_passage = passage_generate_text(system_prompt, user_prompt)
     char_count = len(custom_passage)
     
-    if char_count >= 1400:
+    if char_count >= 1350:
         break  # 글자 수 조건 충족하면 종료
     
-    print(f" 재시도 {attempt + 1}: 글자 수 {char_count}자 (1400자 미만) → 다시 생성")
+    print(f" 재시도 {attempt + 1}: 글자 수 {char_count}자 (1350자 미만) → 다시 생성")
     attempt += 1
 
 # 최종 결과 출력
-if char_count >= 1400:
+if char_count >= 1350:
     print(f"최종 지문 생성 완료 (글자 수: {char_count}자)")
 else:
     print("글자 수 조건을 충족하지 못했습니다. 최대 시도 횟수를 초과했습니다.")
